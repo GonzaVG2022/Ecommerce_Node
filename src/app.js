@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 require('dotenv').config();
 const router = require('./routes');
+const path = require('path');
 // Esta es nuestra aplicación
 const app = express();
 const errorHandler = require('./utils/errorHandler')
@@ -13,6 +14,7 @@ app.use(helmet({
     crossOriginResourcePolicy: false,
 }));
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'public'))); 
 // routes
 app.get('/', (req, res) =>{
     return res.send('Welcome to node')
