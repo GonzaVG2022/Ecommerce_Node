@@ -3,9 +3,16 @@ const Product = require('../models/Product');
 const ProductImg = require('../models/ProductImg');
 const Category = require('../models/Category');
 
-const getAll = catchError(async(req, res) => {
-    const results = await Product.findAll({include: [ProductImg, Category]});
-    return res.json(results);
+const getAll = catchError(async (req, res) => {
+  const { titel, categoryId } = req.query;
+  const where = {};
+  if (titel) where.titel = { [Op.iLike]: `%${titel}%` };
+  if (categoryId) where.categoryId = categoryId;
+  const results = await Product.findAll({
+    include: [ProductImg, Category],
+    where,
+  });
+  return res.json(results);
 });
 
 const create = catchError(async(req, res) => {
