@@ -10,6 +10,7 @@ const ProductImg = sequelize.define('productImg', {
         type: DataTypes.STRING,
         allowNull: false
     }
+    // productId
 }, {
     timestamps:false
 });

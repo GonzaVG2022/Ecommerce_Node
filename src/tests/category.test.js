@@ -42,7 +42,7 @@ test('PUT /categories/:id should update one category', async() => {
     expect(res.status).toBe(200);
     expect(res.body.lastName).toBe(body.lastName);
 
-})
+});
 
 test('DELETE /categories/:id should delete one category', async() => {
     const res = await request(app)

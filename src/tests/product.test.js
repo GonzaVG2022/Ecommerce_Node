@@ -51,13 +51,16 @@ test('PUT /products/:id should update one product', async() => {
     expect(res.body.titel).toBe(body.titel);
 
 });
-test('POST /products/:id/images shoudl set product images', async() => {
-    const image = await ProductImg.create({url:'holiiis', filename:'chau'});
+test("POST /products/:id/images should set the product images", async() => {
+    const image = await ProductImg.create({
+        url: "image.png",
+        filename: "imagen1.png"
+    });
     const res = await request(app)
-    .post(`/api/v1/products/${productId}/images`)
-    .send([image.id])
-    .set(`Authorization`, `Bearer ${token}`);
-    console.log(res.body)
+        .post(`/api/v1/products/${productId}/images`)
+        .send([image.id])
+        .set('Authorization', `Bearer ${token}`);
+    await image.destroy();
     expect(res.status).toBe(200);
     expect(res.body).toHaveLength(1);
 });
