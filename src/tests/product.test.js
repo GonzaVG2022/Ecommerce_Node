@@ -54,7 +54,7 @@ test('PUT /products/:id should update one product', async() => {
 test("POST /products/:id/images should set the product images", async() => {
     const image = await ProductImg.create({
         url: "image.png",
-        filename: "imagen1.png"
+        publicId: "imagen1.png"
     });
     const res = await request(app)
         .post(`/api/v1/products/${productId}/images`)
