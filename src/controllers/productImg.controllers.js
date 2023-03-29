@@ -2,7 +2,7 @@ const catchError = require('../utils/catchError');
 const ProductImg = require('../models/ProductImg');
 const fs = require('fs');
 const path = require('path');
-const { uploadToCloudinary } = require('../utils/cloudinary');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinary');
 
 const getAll = catchError(async(req, res) => {
     const results = await ProductImg.findAll();
@@ -26,8 +26,8 @@ const getOne = catchError(async(req, res) => {
 const remove = catchError(async(req, res) => {
     const { id } = req.params;
     const image = await ProductImg.findByPk(id);
-	if(!image) return res.sendStatus(404);
-    fs.unlinkSync(path.join(__dirname, '..', 'public', 'uploads', image.filename));
+    if(!image) return res.sendStatus(404);
+    await deleteFromCloudinary(image.publicId);
     await image.destroy();
     return res.sendStatus(204);
 });
